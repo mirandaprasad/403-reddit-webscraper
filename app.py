@@ -4,13 +4,25 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 from helpers import *
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+
 
 
 ########### Define a few variables ######
 
 tabtitle = 'Reddit Webscraper'
-sourceurl = 'https://old.reddit.com/r/AskReddit/'
-githublink = 'https://github.com/austinlasseter/reddit-webscraper-plotly'
+sourceurl = 'https://old.reddit.com/r/Showerthoughts?sort=top&t=week'
+githublink = 'https://github.com/mirandaprasad/403-reddit-webscraper'
+button_style = {'background-color': 'darkgreen',
+                    'color': 'white',
+                    'textAlign': 'center',
+                }
+
+
+
+
+
 
 ########### Initiate the app
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -22,10 +34,10 @@ app.title=tabtitle
 ########### Layout ###########
 
 app.layout = html.Div(children=[
-    html.H1('Webscraping posts from reddit'),
+    html.H1('Webscraping posts from Reddit Shower Thoughts'),
     # Dropdowns
     html.Div(children=[
-        html.Button('Scrape Now!', id='submit-val', n_clicks=0),
+        html.Button('Lets Scrape Reddit!', id='submit-val', n_clicks=0, style=button_style),
         html.Div(id='message'),
         dcc.Graph(id='figure-1'),
     ], className='twelve columns'),
