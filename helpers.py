@@ -10,22 +10,26 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def base_fig():
     data=go.Table(columnwidth = [200,200,1000],
-                    header=dict(values=['date', 'time', 'post'], align=['left']),
+                    header=dict(values=['date', 'time', 'post','vader sentiment'], align=['left']),
                     cells=dict(align=['left'],
                                values=[[1,2,3],
                                        [1,2,3],
-                                       ['waiting for data','waiting for data','waiting for data']])
+                                       ['waiting for data','waiting for data','waiting for data'],
+                                        ['waiting for data','waiting for data','waiting for data']
+                                      ])
                  )
     fig = go.Figure([data])
     return fig
 
 def error_fig():
     data=go.Table(columnwidth = [200,200,1000],
-                    header=dict(values=['date', 'time', 'post'], align=['left']),
+                    header=dict(values=['date', 'time', 'post', 'vader sentiment'], align=['left']),
                     cells=dict(align=['left'],
                                values=[['whoa!','whoa!','whoa!'],
                                        [3,2,1],
-                                       ['Slow down!','Scraping takes a sec','Try back later!']])
+                                       ['Slow down!','Scraping takes a sec','Try back later!'],
+                                      ['Processing', 'No data', 'Still Processing']
+                                      ])
                  )
     fig = go.Figure([data])
     return fig

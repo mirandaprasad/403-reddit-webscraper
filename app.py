@@ -10,7 +10,7 @@ from helpers import *
 
 ########### Define a few variables ######
 
-tabtitle = 'Reddit Webscraper'
+tabtitle = 'Reddit Shower Webscraper'
 sourceurl = 'https://old.reddit.com/r/Showerthoughts?sort=top&t=week'
 githublink = 'https://github.com/mirandaprasad/403-reddit-webscraper'
 button_style = {'background-color': 'darkgreen',
