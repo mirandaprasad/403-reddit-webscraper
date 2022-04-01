@@ -4,7 +4,6 @@ import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from helpers import *
 
 

@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import datetime
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
 ########### Set up the default figures ######
@@ -31,7 +31,23 @@ def error_fig():
     return fig
 
 
-
+    ##### vader sentiment ##########
+def sentiment_scores(sentence):
+    try:
+    # Create a SentimentIntensityAnalyzer object.
+        sid_obj = SentimentIntensityAnalyzer()
+        sentiment_dict = sid_obj.polarity_scores(sentence)
+        score = sentiment_dict['compound']
+        if score >= 0.05 :
+            final=f"Positive: {round(score,2)}"
+        elif score <= - 0.05 :
+            final=f"Negative: {round(score,2)}"
+        else :
+            final=f"Neutral: {round(score,2)}"
+        return final
+    except:
+        return "An error has occurred"
+        
 
 ########### Functions  ######
 
@@ -50,11 +66,15 @@ def parse_that_date(row):
     z = '2020 '+ y
     return z[:20]
 
+
+
+
+
 ########### Scraping ######
 
 def scrape_reddit():
     # apply the function to our reddit source
-    url = 'https://old.reddit.com/r/AskReddit/'
+    url = 'https://old.reddit.com/r/Showerthoughts?sort=top&t=week'
     soup = lovely_soup(url)
     # create a list of titles
     titles = soup.findAll('p', {'class': 'title'})
@@ -67,6 +87,7 @@ def scrape_reddit():
     for date in dates:
         output = str(date).split('title="')[1].split('2020')[0]
         dateslist.append(output)
+
 
     ########### Pandas work ######
     # convert the two lists into a pandas dataframe
@@ -85,7 +106,10 @@ def scrape_reddit():
     # split into 2 date/time variables
     working_df['date']=working_df['UTC_date'].dt.date
     working_df['time']=working_df['UTC_date'].dt.time
-    final_df = working_df[['date', 'time', 'post']].copy()
+    # add vader sentiment 
+    working_df['vader sentiment']= working_df['post'].apply(sentiment_scores)                                             
+    #final 
+    final_df = working_df[['date', 'time', 'post','vader sentiment']].copy()
 
 
 
@@ -96,7 +120,8 @@ def scrape_reddit():
                     cells=dict(align=['left'],
                                values=[final_df['date'],
                                        final_df['time'],
-                                       final_df['post'].values])
+                                       final_df['post'].values,
+                                       final_df['vader sentiment'].values])
                  )
     fig = go.Figure([data])
     return fig
