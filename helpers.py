@@ -67,7 +67,7 @@ def clean_that_post(row):
 def parse_that_date(row):
     x = row.split(' ')[1:]
     y = ' '.join(x)
-    z = '2020 '+ y
+    z = '2022 '+ y
     return z[:20]
 
 
@@ -89,7 +89,7 @@ def scrape_reddit():
     dates = soup.findAll('time', {'class':"live-timestamp"})
     dateslist=[]
     for date in dates:
-        output = str(date).split('title="')[1].split('2020')[0]
+        output = str(date).split('title="')[1].split('2022')[0]
         dateslist.append(output)
 
 
